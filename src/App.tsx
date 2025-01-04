@@ -1,9 +1,6 @@
-import { useState } from "react";
 import { ReactStepSlider } from "./components/ReactStepSlider";
 
 function App() {
-  const [lineValue, setLineValue] = useState(0);
-
   return (
     <div
       style={{
@@ -17,7 +14,7 @@ function App() {
       <div style={{ width: "50%" }}>
         <ReactStepSlider
           steps={5}
-          onChange={setLineValue}
+          onChange={() => {}}
           dotColor={"red"}
           dotSize={12}
           verticalLineColor="#323232"
