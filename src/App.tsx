@@ -1,3 +1,4 @@
+import React from "react";
 import { ReactStepSlider } from "./components/ReactStepSlider";
 
 function App() {

@@ -44,8 +44,8 @@ export default App;
 
 | Prop                 | Type                     | Default   | Description                                |
 | -------------------- | ------------------------ | --------- | ------------------------------------------ |
-| onChange1            | (value: number) => void2 | Required  | Callback function triggered on step change |
-| dotColor1            | string                   | #0000FF   | Color of the moving dot                    |
+| onChange             | (value: number) => void2 | Required  | Callback function triggered on step change |
+| dotColor             | string                   | #0000FF   | Color of the moving dot                    |
 | verticalLineColor    | string                   | #0000FF   | Color of the vertical lines                |
 | verticalLineHeight   | string                   | 16px      | Height of the vertical lines               |
 | horizontalLineColor  | string                   | #0000FF   | Color of the horizontal line               |
