@@ -23,16 +23,24 @@ function App() {
 
   return (
     <ReactStepSlider
-      steps={5}
-      onChange={setLineValue}
+      steps={8}
+      onChange={() => {}}
       dotColor={"red"}
       dotSize={12}
-      verticalLineColor="#323232"
-      verticalLineHeight={20}
-      verticalLineWidth={2}
-      horizontalLineHeight={2}
-      labels={["11", "22", "33", "44", "55"]}
-      labelSize={12}
+      verticalLineColor="#0F0F"
+      verticalLineHeight={25}
+      verticalLineWidth={3}
+      horizontalLineHeight={3}
+      horizontalLineColor="#C0FF"
+      labels={[
+        "first label",
+        "second label hello world",
+        "third label",
+        "fourth label",
+        "fifth label",
+      ]}
+      labelSize={16}
+      ellipsisLabelWidth={110}
     />
   );
 }
@@ -42,31 +50,42 @@ export default App;
 
 ## Props
 
-| Prop                 | Type                     | Default   | Description                                |
-| -------------------- | ------------------------ | --------- | ------------------------------------------ |
-| onChange             | (value: number) => void2 | Required  | Callback function triggered on step change |
-| dotColor             | string                   | #0000FF   | Color of the moving dot                    |
-| verticalLineColor    | string                   | #0000FF   | Color of the vertical lines                |
-| verticalLineHeight   | string                   | 16px      | Height of the vertical lines               |
-| horizontalLineColor  | string                   | #0000FF   | Color of the horizontal line               |
-| horizontalLineHeight | string                   | 2px       | Height of the horizontal line              |
-| steps                | string                   | 5         | Number of steps in the slider              |
-| labels               | string                   | []        | Labels for each step                       |
-| width                | string                   | 100%      | Width of the slider                        |
-| className            | string                   | undefined | Addional custom class for the slider       |
+| Prop                 | Type                     | Default  | Description                                |
+| -------------------- | ------------------------ | -------- | ------------------------------------------ |
+| steps                | string                   | 5        | Number of steps in the slider              |
+| onChange             | (value: number) => void2 | Required | Callback function triggered on step change |
+| dotColor             | string                   | #0000FF  | Color of the moving dot                    |
+| verticalLineColor    | string                   | #0000FF  | Color of the vertical lines                |
+| verticalLineHeight   | string                   | 16px     | Height of the vertical lines               |
+| verticalLineWidth    | number                   | 3        | Width of the vertical lines                |
+| horizontalLineHeight | string                   | 2px      | Height of the horizontal line              |
+| horizontalLineColor  | string                   | #0000FF  | Color of the horizontal line               |
+| labels               | Array<string>            | []       | Array of labels for each step              |
+| labelSize            | number                   | 16       | Font Size of label text                    |
+| ellipsisLabelWidth   | number                   | 20       | Width of label                             |
 
 ## Custom Styling
 
 ```typescript
 <ReactStepSlider
-  steps={3}
-  labels={["Small", "Medium", "Large"]}
-  dotColor="#ff5733"
-  verticalLineColor="#2ecc71"
-  horizontalLineColor="#3498db"
-  verticalLineHeight="20px"
-  horizontalLineHeight="4px"
-  width="300px"
+  steps={8}
+  onChange={() => {}}
+  dotColor={"red"}
+  dotSize={12}
+  verticalLineColor="#0F0F"
+  verticalLineHeight={25}
+  verticalLineWidth={3}
+  horizontalLineHeight={3}
+  horizontalLineColor="#C0FF"
+  labels={[
+    "first label",
+    "second label hello world",
+    "third label",
+    "fourth label",
+    "fifth label",
+  ]}
+  labelSize={16}
+  ellipsisLabelWidth={110}
 />
 ```
 

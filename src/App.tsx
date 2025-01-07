@@ -12,18 +12,26 @@ function App() {
         justifyContent: "center",
       }}
     >
-      <div style={{ width: "50%" }}>
+      <div style={{ width: "90%" }}>
         <ReactStepSlider
-          steps={5}
+          steps={8}
           onChange={() => {}}
           dotColor={"red"}
           dotSize={12}
-          verticalLineColor="#323232"
-          verticalLineHeight={20}
-          verticalLineWidth={2}
-          horizontalLineHeight={2}
-          labels={["11", "22", "33", "44", "55"]}
-          labelSize={12}
+          verticalLineColor="#0F0F"
+          verticalLineHeight={25}
+          verticalLineWidth={3}
+          horizontalLineHeight={3}
+          horizontalLineColor="#C0FF"
+          labels={[
+            "first label",
+            "second label hello world",
+            "third label",
+            "fourth label",
+            "fifth label",
+          ]}
+          labelSize={16}
+          ellipsisLabelWidth={110}
         />
       </div>
     </div>

@@ -12,7 +12,7 @@ type ReactStepSliderProps = {
   steps: number;
   labels?: Array<string>;
   labelSize?: number;
-  width?: string;
+  ellipsisLabelWidth?: number;
 };
 
 export const ReactStepSlider = ({
@@ -27,7 +27,7 @@ export const ReactStepSlider = ({
   steps = 5,
   labels = [],
   labelSize = 16,
-  width = "100%",
+  ellipsisLabelWidth = 20,
 }: ReactStepSliderProps) => {
   /** Property */
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -36,7 +36,7 @@ export const ReactStepSlider = ({
   return (
     <div
       className="slider-container"
-      style={{ width, position: "relative", height: "auto" }}
+      style={{ position: "relative", height: "auto" }}
     >
       {/* 수평, 수직 라인 */}
       <div
@@ -72,9 +72,13 @@ export const ReactStepSlider = ({
                 onChange(index);
               }}
             >
-              <div className="flex flex-col items-center justify-center border border-red-500">
+              <div className="flex flex-col items-center justify-center border border-black relative">
                 <div
                   style={{
+                    position: "absolute",
+                    left: "50%",
+                    top: "50%",
+                    transform: `translate(-50%, -50%)`,
                     height: `${verticalLineHeight}px`,
                     backgroundColor: verticalLineColor,
                     width: `${verticalLineWidth}px`,
@@ -85,12 +89,12 @@ export const ReactStepSlider = ({
                   title={labels[index]}
                   style={{
                     position: "absolute",
-                    bottom: "-40%",
+                    top: 0,
                     left: "50%",
-                    transform: "translate(-50%, 50%)",
+                    transform: "translate(-50%, 100%)",
                     fontSize: `${labelSize}px`,
                     marginTop: "4px",
-                    width: "150px",
+                    width: `${ellipsisLabelWidth}px`,
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
                     overflow: "hidden",

@@ -12,7 +12,7 @@ export type ReactStepSliderProps = {
   steps: number;
   labels?: Array<string>;
   labelSize?: number;
-  width?: string;
+  ellipsisLabelWidth?: number;
 };
 
 export declare const ReactStepSlider: FC<ReactStepSliderProps>;
