@@ -15,20 +15,19 @@ function App() {
       <div style={{ width: "90%" }}>
         <ReactStepSlider
           steps={8}
-          onChange={() => {}}
-          dotColor={"red"}
+          onChange={() => { }}
+          dotColor={"green"}
           dotSize={12}
-          verticalLineColor="#0F0F"
+          verticalLineColor="#ff0000"
           verticalLineHeight={25}
           verticalLineWidth={3}
           horizontalLineHeight={3}
-          horizontalLineColor="#C0FF"
+          horizontalLineColor={"yellow"}
           labels={[
-            "first label",
-            "second label hello world",
-            "third label",
-            "fourth label",
-            "fifth label",
+            "First Label",
+            "Second Label hello world",
+            "This is Third Label",
+            "Fourth Label",
           ]}
           labelSize={16}
           ellipsisLabelWidth={110}
