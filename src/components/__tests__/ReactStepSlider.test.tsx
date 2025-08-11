@@ -12,7 +12,7 @@ describe('ReactStepSlider', () => {
 
   describe('기본 렌더링', () => {
     it('기본 props로 정상 렌더링되어야 한다', () => {
-      render(<ReactStepSlider onChange={mockOnChange} />);
+      render(<ReactStepSlider onChange={mockOnChange} steps={5} />);
 
       // 슬라이더 컨테이너가 있는지 확인
       const slider = screen.getByRole('slider');
@@ -123,7 +123,7 @@ describe('ReactStepSlider', () => {
 
     it('커스텀 className이 적용되어야 한다', () => {
       const customClass = 'custom-slider';
-      render(<ReactStepSlider onChange={mockOnChange} className={customClass} />);
+      render(<ReactStepSlider onChange={mockOnChange} steps={5} className={customClass} />);
 
       const slider = screen.getByRole('slider');
       expect(slider).toHaveClass('slider-container', customClass);
@@ -131,7 +131,7 @@ describe('ReactStepSlider', () => {
 
     it('커스텀 aria-label이 적용되어야 한다', () => {
       const customAriaLabel = '단계 선택기';
-      render(<ReactStepSlider onChange={mockOnChange} aria-label={customAriaLabel} />);
+      render(<ReactStepSlider onChange={mockOnChange} steps={5} aria-label={customAriaLabel} />);
 
       const slider = screen.getByRole('slider');
       expect(slider).toHaveAttribute('aria-label', customAriaLabel);
@@ -140,7 +140,7 @@ describe('ReactStepSlider', () => {
 
   describe('스타일링', () => {
     it('기본 스타일이 적용되어야 한다', () => {
-      render(<ReactStepSlider onChange={mockOnChange} />);
+      render(<ReactStepSlider onChange={mockOnChange} steps={5} />);
 
       const slider = screen.getByRole('slider');
       expect(slider).toHaveStyle({ position: 'relative' });
@@ -148,7 +148,7 @@ describe('ReactStepSlider', () => {
 
     it('커스텀 색상이 적용되어야 한다', () => {
       const customColor = '#ff0000';
-      render(<ReactStepSlider onChange={mockOnChange} dotColor={customColor} />);
+      render(<ReactStepSlider onChange={mockOnChange} steps={5} dotColor={customColor} />);
 
       // 슬라이더 도트 확인
       const dot = document.querySelector('.slider-dot');

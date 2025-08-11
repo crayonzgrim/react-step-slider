@@ -55,24 +55,24 @@ export default App;
 
 ## Props
 
-| Prop                 | Type                     | Default      | Description                                          |
-| -------------------- | ------------------------ | ------------ | ---------------------------------------------------- |
-| onChange             | (value: number) => void  | Required     | Callback function triggered on step change          |
-| steps                | number                   | 5            | Number of steps in the slider                        |
-| dotColor             | string                   | #0000ff      | Color of the moving dot                              |
-| dotSize              | number                   | 12           | Size of the moving dot in pixels                     |
-| verticalLineColor    | string                   | #0000ff      | Color of the vertical lines                          |
-| verticalLineHeight   | number                   | 16           | Height of the vertical lines in pixels               |
-| verticalLineWidth    | number                   | 2            | Width of the vertical lines in pixels                |
-| horizontalLineColor  | string                   | #0000ff      | Color of the horizontal line                         |
-| horizontalLineHeight | number                   | 2            | Height of the horizontal line in pixels              |
-| labels               | Array<string>            | []           | Array of labels for each step                        |
-| labelSize            | number                   | 16           | Font size of label text in pixels                    |
-| ellipsisLabelWidth   | number                   | 20           | Width of label container in pixels                   |
-| initialIndex         | number                   | 0            | Initial step index (0-based)                         |
-| pointerBoundary      | number                   | 8            | Padding around clickable area in pixels              |
-| className            | string                   | ""           | Additional CSS class names                           |
-| aria-label           | string                   | "Step slider"| Accessible label for screen readers                 |
+| Prop                 | Type                     | Required | Default      | Description                                          |
+| -------------------- | ------------------------ | -------- | ------------ | ---------------------------------------------------- |
+| onChange             | (value: number) => void  | ✅       | -            | Callback function triggered on step change          |
+| steps                | number                   | ✅       | -            | Number of steps in the slider                        |
+| dotColor             | string                   | ❌       | #0000ff      | Color of the moving dot                              |
+| dotSize              | number                   | ❌       | 12           | Size of the moving dot in pixels                     |
+| verticalLineColor    | string                   | ❌       | #0000ff      | Color of the vertical lines                          |
+| verticalLineHeight   | number                   | ❌       | 16           | Height of the vertical lines in pixels               |
+| verticalLineWidth    | number                   | ❌       | 2            | Width of the vertical lines in pixels                |
+| horizontalLineColor  | string                   | ❌       | #0000ff      | Color of the horizontal line                         |
+| horizontalLineHeight | number                   | ❌       | 2            | Height of the horizontal line in pixels              |
+| labels               | Array<string>            | ❌       | []           | Array of labels for each step                        |
+| labelSize            | number                   | ❌       | 16           | Font size of label text in pixels                    |
+| ellipsisLabelWidth   | number                   | ❌       | 20           | Width of label container in pixels                   |
+| initialIndex         | number                   | ❌       | 0            | Initial step index (0-based)                         |
+| pointerBoundary      | number                   | ❌       | 8            | Padding around clickable area in pixels              |
+| className            | string                   | ❌       | ""           | Additional CSS class names                           |
+| aria-label           | string                   | ❌       | "Step slider"| Accessible label for screen readers                 |
 
 ## Features
 

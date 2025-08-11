@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 
 type ReactStepSliderProps = {
   onChange: (value: number) => void;
+  steps: number;
   dotColor?: string;
   dotSize?: number;
   verticalLineColor?: string;
@@ -9,7 +10,6 @@ type ReactStepSliderProps = {
   verticalLineWidth?: number;
   horizontalLineColor?: string;
   horizontalLineHeight?: number;
-  steps?: number;
   labels?: Array<string>;
   labelSize?: number;
   ellipsisLabelWidth?: number;
