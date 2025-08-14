@@ -1,6 +1,6 @@
 {
   "name": "react-step-slider",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "Step Slider component for React",
   "type": "module",
   "scripts": {
