@@ -4,8 +4,11 @@ export default defineConfig({
   entry: ["src/components/ReactStepSlider.tsx"],
   format: ["esm", "cjs"],
   dts: true,
-  sourcemap: false, // 소스맵 제거하여 파일 크기 줄임
+  sourcemap: false,
   clean: true,
-  minify: true, // 코드 압축 활성화
+  minify: true,
+  treeshake: true,
   external: ["react", "react-dom"],
+  target: "es2018",
+  splitting: false,
 });

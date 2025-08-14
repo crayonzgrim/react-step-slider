@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useMemo } from "react";
 
 type ReactStepSliderProps = {
   onChange: (value: number) => void;
@@ -10,7 +10,7 @@ type ReactStepSliderProps = {
   verticalLineWidth?: number;
   horizontalLineColor?: string;
   horizontalLineHeight?: number;
-  labels?: Array<string>;
+  labels?: readonly string[];
   labelSize?: number;
   ellipsisLabelWidth?: number;
   initialIndex?: number;
@@ -19,63 +19,95 @@ type ReactStepSliderProps = {
   'aria-label'?: string;
 };
 
-// 리팩토링: 기본값 상수 분리
-const DEFAULT_PROPS = {
-  dotColor: "#0000ff",
-  dotSize: 12,
-  verticalLineColor: "#0000ff",
-  verticalLineHeight: 16,
-  verticalLineWidth: 2,
-  horizontalLineColor: "#0000ff",
-  horizontalLineHeight: 2,
-  steps: 5,
-  labels: [],
-  labelSize: 16,
-  ellipsisLabelWidth: 20,
-  initialIndex: 0,
-  pointerBoundary: 8,
-  className: "",
-  'aria-label': "Step slider"
-} as const;
-
 export const ReactStepSlider = (props: ReactStepSliderProps) => {
-  /** Property */
   const {
     onChange,
-    dotColor = DEFAULT_PROPS.dotColor,
-    dotSize = DEFAULT_PROPS.dotSize,
-    verticalLineColor = DEFAULT_PROPS.verticalLineColor,
-    verticalLineHeight = DEFAULT_PROPS.verticalLineHeight,
-    verticalLineWidth = DEFAULT_PROPS.verticalLineWidth,
-    horizontalLineColor = DEFAULT_PROPS.horizontalLineColor,
-    horizontalLineHeight = DEFAULT_PROPS.horizontalLineHeight,
-    steps = DEFAULT_PROPS.steps,
-    labels = DEFAULT_PROPS.labels,
-    labelSize = DEFAULT_PROPS.labelSize,
-    ellipsisLabelWidth = DEFAULT_PROPS.ellipsisLabelWidth,
-    initialIndex = DEFAULT_PROPS.initialIndex,
-    pointerBoundary = DEFAULT_PROPS.pointerBoundary,
-    className = DEFAULT_PROPS.className,
-    'aria-label': ariaLabel = DEFAULT_PROPS['aria-label']
+    dotColor = "#0000ff",
+    dotSize = 12,
+    verticalLineColor = "#0000ff",
+    verticalLineHeight = 16,
+    verticalLineWidth = 2,
+    horizontalLineColor = "#0000ff",
+    horizontalLineHeight = 2,
+    steps = 5,
+    labels = [],
+    labelSize = 16,
+    ellipsisLabelWidth = 20,
+    initialIndex = 0,
+    pointerBoundary = 8,
+    className = "",
+    'aria-label': ariaLabel = "Step slider"
   } = props;
 
   const [currentIndex, setCurrentIndex] = useState<number>(initialIndex);
 
-  /** Function */
-  const getStepPosition = useCallback((index: number) => {
-    return (index / (steps - 1)) * 100;
-  }, [steps]);
+  const getStepPosition = useCallback((index: number) => (index / (steps - 1)) * 100, [steps]);
 
   const handleStepClick = useCallback((index: number) => {
     setCurrentIndex(index);
     onChange(index);
   }, [onChange]);
 
-  /** Render */
+  const stepIndices = useMemo(() => Array.from({ length: steps }, (_, i) => i), [steps]);
+
+  const baseStyles = useMemo(() => ({
+    container: { position: "relative" as const, height: "auto" as const },
+    horizontalLine: {
+      position: "relative" as const,
+      width: "100%",
+      height: `${horizontalLineHeight}px`,
+      backgroundColor: horizontalLineColor,
+    },
+    stepContainer: {
+      position: "absolute" as const,
+      top: "0%",
+      transform: "translate(-50%, -50%)",
+      padding: `${pointerBoundary}px`,
+      display: "flex",
+      flexDirection: "column" as const,
+      alignItems: "center" as const,
+      justifyContent: "center" as const,
+      cursor: "pointer",
+    },
+    stepContent: { position: "relative" as const },
+    verticalLine: {
+      position: "absolute" as const,
+      left: "50%",
+      top: "50%",
+      transform: "translate(-50%, -50%)",
+      height: `${verticalLineHeight}px`,
+      backgroundColor: verticalLineColor,
+      width: `${verticalLineWidth}px`,
+    },
+    label: {
+      position: "absolute" as const,
+      top: `${verticalLineHeight / 2 + 8}px`,
+      left: "50%",
+      transform: "translate(-50%, 0)",
+      fontSize: `${labelSize}px`,
+      width: `${ellipsisLabelWidth}px`,
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap" as const,
+      overflow: "hidden",
+      textAlign: "center" as const,
+    },
+    dot: {
+      position: "absolute" as const,
+      top: "50%",
+      transform: "translate(-50%, -50%)",
+      borderRadius: "100%",
+      backgroundColor: dotColor,
+      width: `${dotSize}px`,
+      height: `${dotSize}px`,
+      transition: "all 0.3s ease-in-out",
+      zIndex: 1,
+    }
+  }), [horizontalLineHeight, horizontalLineColor, pointerBoundary, verticalLineHeight, verticalLineColor, verticalLineWidth, labelSize, ellipsisLabelWidth, dotColor, dotSize]);
+
   return (
     <div
       className={`slider-container ${className}`}
-      style={{ position: "relative", height: "auto" }}
+      style={baseStyles.container}
       role="slider"
       aria-label={ariaLabel}
       aria-valuemin={0}
@@ -83,35 +115,16 @@ export const ReactStepSlider = (props: ReactStepSliderProps) => {
       aria-valuenow={currentIndex}
       aria-valuetext={labels[currentIndex] || `Step ${currentIndex + 1}`}
     >
-      {/* 수평, 수직 라인 */}
-      <div
-        className="slider-horizontal-line"
-        style={{
-          position: "relative",
-          width: "100%",
-          height: `${horizontalLineHeight}px`,
-          backgroundColor: horizontalLineColor,
-        }}
-      >
-        {Array.from({ length: steps }, (_, i) => i).map((_, index) => {
+      <div className="slider-horizontal-line" style={baseStyles.horizontalLine}>
+        {stepIndices.map((index) => {
           const position = getStepPosition(index);
+          const stepLabel = labels[index];
 
           return (
             <div
               key={index}
               className="slider-step"
-              style={{
-                position: "absolute",
-                top: "0%",
-                left: `${position}%`,
-                transform: "translate(-50%, -50%)",
-                padding: `${pointerBoundary}px`,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-              }}
+              style={{ ...baseStyles.stepContainer, left: `${position}%` }}
               onClick={() => handleStepClick(index)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
@@ -121,62 +134,25 @@ export const ReactStepSlider = (props: ReactStepSliderProps) => {
               }}
               tabIndex={0}
               role="button"
-              aria-label={`Go to step ${index + 1}${labels[index] ? `: ${labels[index]}` : ''}`}
+              aria-label={`Go to step ${index + 1}${stepLabel ? `: ${stepLabel}` : ''}`}
             >
-              <div className="slider-step-content" style={{ position: "relative" }}>
-                <div
-                  style={{
-                    position: "absolute",
-                    left: "50%",
-                    top: "50%",
-                    transform: `translate(-50%, -50%)`,
-                    height: `${verticalLineHeight}px`,
-                    backgroundColor: verticalLineColor,
-                    width: `${verticalLineWidth}px`,
-                  }}
-                />
-                <p
-                  className="step-label"
-                  title={labels[index]}
-                  style={{
-                    position: "absolute",
-                    top: `${verticalLineHeight / 2 + 8}px`,
-                    left: "50%",
-                    transform: "translate(-50%, 0)",
-                    fontSize: `${labelSize}px`,
-                    width: `${ellipsisLabelWidth}px`,
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textAlign: "center",
-                  }}
-                >
-                  {labels[index]}
-                </p>
+              <div className="slider-step-content" style={baseStyles.stepContent}>
+                <div style={baseStyles.verticalLine} />
+                {stepLabel && (
+                  <p className="step-label" title={stepLabel} style={baseStyles.label}>
+                    {stepLabel}
+                  </p>
+                )}
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* 움직이는 원 */}
-      {currentIndex !== null && (
-        <div
-          className="slider-dot"
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: `${getStepPosition(currentIndex)}%`,
-            transform: "translate(-50%, -50%)",
-            borderRadius: "100%",
-            backgroundColor: dotColor,
-            width: `${dotSize}px`,
-            height: `${dotSize}px`,
-            transition: "all 0.3s ease-in-out",
-            zIndex: 1,
-          }}
-        />
-      )}
+      <div
+        className="slider-dot"
+        style={{ ...baseStyles.dot, left: `${getStepPosition(currentIndex)}%` }}
+      />
     </div>
   );
 };
