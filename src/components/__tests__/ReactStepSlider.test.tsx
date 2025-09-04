@@ -14,7 +14,6 @@ describe('ReactStepSlider', () => {
     it('기본 props로 정상 렌더링되어야 한다', () => {
       render(<ReactStepSlider onChange={mockOnChange} steps={5} />);
 
-      // 슬라이더 컨테이너가 있는지 확인
       const slider = screen.getByRole('slider');
       expect(slider).toBeInTheDocument();
       expect(slider).toHaveAttribute('aria-label', 'Step slider');
@@ -23,7 +22,6 @@ describe('ReactStepSlider', () => {
     it('지정된 스텝 수 만큼 스텝이 렌더링되어야 한다', () => {
       render(<ReactStepSlider onChange={mockOnChange} steps={3} />);
 
-      // 3개의 스텝 버튼이 있는지 확인
       const stepButtons = screen.getAllByRole('button');
       expect(stepButtons).toHaveLength(3);
     });
@@ -32,7 +30,6 @@ describe('ReactStepSlider', () => {
       const labels = ['시작', '중간', '끝'];
       render(<ReactStepSlider onChange={mockOnChange} steps={3} labels={labels} />);
 
-      // 각 라벨이 표시되는지 확인
       labels.forEach(label => {
         expect(screen.getByText(label)).toBeInTheDocument();
       });
@@ -46,12 +43,10 @@ describe('ReactStepSlider', () => {
 
       render(<ReactStepSlider onChange={mockOnChange} steps={5} />);
 
-      // 첫번째 Tab으로 첫 번째 스텝 버튼에 포커스
       await user.tab();
       const stepButtons = screen.getAllByRole('button');
       expect(stepButtons[0]).toHaveFocus();
 
-      // Enter 키 누르기
       await user.keyboard('{Enter}')
       expect(mockOnChange).toHaveBeenCalledWith(0)
     });
@@ -61,7 +56,6 @@ describe('ReactStepSlider', () => {
 
       const stepButtons = screen.getAllByRole('button');
 
-      // 첫 번째 스텝에 포커스하고 Enter 키 입력
       stepButtons[0].focus();
       fireEvent.keyDown(stepButtons[0], { key: 'Enter' });
 
@@ -146,14 +140,38 @@ describe('ReactStepSlider', () => {
       expect(slider).toHaveStyle({ position: 'relative' });
     });
 
-    it('커스텀 색상이 적용되어야 한다', () => {
-      const customColor = '#ff0000';
-      render(<ReactStepSlider onChange={mockOnChange} steps={5} dotColor={customColor} />);
 
-      // 슬라이더 도트 확인
-      const dot = document.querySelector('.slider-dot');
-      expect(dot).toHaveStyle({ backgroundColor: customColor });
+    it('커스텀 style prop이 적용되어야 한다', () => {
+      const customStyle = { border: '2px solid red', padding: '10px' };
+      render(<ReactStepSlider onChange={mockOnChange} steps={5} style={customStyle} />);
+
+      const slider = screen.getByRole('slider');
+      expect(slider).toHaveStyle({ border: '2px solid red', padding: '10px' });
     });
+
+    it('style prop이 기본 스타일과 병합되어야 한다', () => {
+      const customStyle = { backgroundColor: '#ff5722' };
+      render(<ReactStepSlider onChange={mockOnChange} steps={5} style={customStyle} />);
+
+      const slider = screen.getByRole('slider');
+      expect(slider).toHaveStyle('position: relative');
+      expect(slider).toHaveStyle('background-color: #ff5722');
+    });
+
+    it('커스텀 transition duration이 적용되어야 한다', () => {
+      render(<ReactStepSlider onChange={mockOnChange} steps={5} transitionDuration={1.5} />);
+
+      const dot = document.querySelector('.slider-dot');
+      expect(dot).toHaveStyle('transition: all 1.5s ease-in-out');
+    });
+
+    it('기본 transition duration이 적용되어야 한다', () => {
+      render(<ReactStepSlider onChange={mockOnChange} steps={5} />);
+
+      const dot = document.querySelector('.slider-dot');
+      expect(dot).toHaveStyle('transition: all 0.3s ease-in-out');
+    });
+
   });
 
   describe('엣지 케이스', () => {
@@ -167,7 +185,6 @@ describe('ReactStepSlider', () => {
     it('라벨 배열이 단계 수보다 적을 때 처리되어야 한다', () => {
       render(<ReactStepSlider onChange={mockOnChange} steps={5} labels={['첫번째', '두번째']} />);
 
-      // 처음 두 개는 라벨이 있고, 나머지는 없어야 함
       expect(screen.getByText('첫번째')).toBeInTheDocument();
       expect(screen.getByText('두번째')).toBeInTheDocument();
     });
